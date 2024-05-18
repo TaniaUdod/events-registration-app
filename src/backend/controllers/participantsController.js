@@ -1,23 +1,17 @@
 const { Participant } = require("../models/participants");
+const { Event } = require("../models/events");
 const ctrlWrapper = require("../helpers/ctrlWrapper");
 const { HttpError } = require("../helpers/HttpError");
-const { Event } = require("../models/events");
 
 const getAllParticipants = async (req, res, next) => {
   const { id } = req.query;
   const { limit = 20 } = req.query;
 
-  console.log("Fetching participants for event:", id);
-
   const participants = await Participant.find({ owner: id })
     .limit(Number(limit))
     .populate("owner");
 
-  const total = await Participant.countDocuments({ owner: id });
-
-  console.log("Total participants found:", total);
-
-  res.status(200).json({ total, participants });
+  res.status(200).json({ participants });
 };
 
 const getOneParticipant = ctrlWrapper(async (req, res, next) => {

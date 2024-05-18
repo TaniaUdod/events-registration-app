@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const fetchEventData = async () => {
+export const fetchEventData = async () => {
   try {
     const response = await axios.get("/events");
     return response.data;
@@ -9,5 +9,3 @@ const fetchEventData = async () => {
     return [];
   }
 };
-
-export default fetchEventData;
