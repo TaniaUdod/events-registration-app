@@ -19,6 +19,12 @@ const eventSchema = new Schema(
       required: true,
     },
     image: { type: String },
+    participants: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "participant",
+      },
+    ],
   },
   { versionKey: false, timestamps: true }
 );
