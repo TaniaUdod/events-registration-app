@@ -1,11 +1,16 @@
 import React, { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Loader from "../Loader/Loader";
 
 const Layout = () => {
   return (
     <div>
-      <h1>Events Registration App</h1>
+      <header>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/events">Events</Link>
+        </nav>
+      </header>
 
       <main>
         <Suspense fallback={<Loader />}>

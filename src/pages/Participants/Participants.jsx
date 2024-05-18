@@ -7,7 +7,7 @@ const Participants = () => {
   const [participants, setParticipants] = useState([]);
 
   const location = useLocation();
-  const backLink = useRef(location.state?.from ?? "/");
+  const backLink = useRef(location.state?.from ?? "/events");
 
   useEffect(() => {
     const fetchParticipants = async () => {
