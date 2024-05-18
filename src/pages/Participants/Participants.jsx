@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { getAllParticipants } from "../../services/fetchParticipant";
+import {
+  Button,
+  Container,
+  ItemName,
+  Message,
+  ParticipantsItem,
+  ParticipantsList,
+  ParticipantsTitle,
+  TitleAccent,
+} from "./Participants.styled";
 
 const Participants = () => {
   const { id } = useParams();
@@ -23,30 +33,32 @@ const Participants = () => {
   }, [id]);
 
   return (
-    <div>
+    <Container>
       <Link to={backLink.current}>
-        <button type="button">Go back</button>
+        <Button type="button">Go back</Button>
       </Link>
 
       {participants.length > 0 ? (
         <>
-          <h2>
-            {participants.length > 0 && participants[0].owner.title}{" "}
+          <ParticipantsTitle>
+            <TitleAccent>
+              {participants.length > 0 && participants[0].owner.title}
+            </TitleAccent>{" "}
             participants
-          </h2>
-          <ul>
+          </ParticipantsTitle>
+          <ParticipantsList>
             {participants.map((participant) => (
-              <li key={participant._id}>
-                <p>{participant.name}</p>
+              <ParticipantsItem key={participant._id}>
+                <ItemName>{participant.name}</ItemName>
                 <p>{participant.email}</p>
-              </li>
+              </ParticipantsItem>
             ))}
-          </ul>
+          </ParticipantsList>
         </>
       ) : (
-        <p>No participants found.</p>
+        <Message>No participants found.</Message>
       )}
-    </div>
+    </Container>
   );
 };
 

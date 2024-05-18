@@ -2,6 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchEventData } from "../../services/fetchEventData";
 import Loader from "../../components/Loader/Loader";
+import {
+  Button,
+  ButtonWrap,
+  Container,
+  EventsDate,
+  EventsItem,
+  EventsList,
+  EventsText,
+  EventsTitle,
+  Img,
+  Title,
+} from "./Events.styled";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -19,29 +31,38 @@ const Events = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
       {isLoading && <Loader />}
-      <h1>Featured Events</h1>
-      <ul>
+      <Title>Featured Events</Title>
+      <EventsList>
         {events.map((event) => (
-          <li key={event._id}>
-            <img src={event.image} alt="Event poster" width={300} />
-            <h2>{event.title}</h2>
-            <p>{event.description}</p>
-            <p>{new Date(event.eventDate).toLocaleDateString()}</p>
+          <EventsItem key={event._id}>
+            <Img
+              src={event.image}
+              alt="Event poster"
+              width={250}
+              height={160}
+            />
+            <EventsTitle>{event.title}</EventsTitle>
+            <EventsText>{event.description}</EventsText>
+            <EventsDate>
+              {new Date(event.eventDate).toLocaleDateString()}
+            </EventsDate>
             <p>Organizer: {event.organizer}</p>
 
-            <Link to="/registration">
-              <button type="button">Register</button>
-            </Link>
+            <ButtonWrap>
+              <Link to="/registration">
+                <Button type="button">Register</Button>
+              </Link>
 
-            <Link to={`/participants/${event._id}`}>
-              <button type="button">View</button>
-            </Link>
-          </li>
+              <Link to={`/participants/${event._id}`}>
+                <Button type="button">View</Button>
+              </Link>
+            </ButtonWrap>
+          </EventsItem>
         ))}
-      </ul>
-    </div>
+      </EventsList>
+    </Container>
   );
 };
 
