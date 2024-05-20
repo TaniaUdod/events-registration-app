@@ -7,14 +7,15 @@ export const getAllParticipants = async (eventId, limit = 20) => {
   return response.data;
 };
 
-export const getEventById = async (id) => {
-  const response = await axios.get(`/participants/${id}`);
-  return response.data;
-};
+// export const getEventById = async (id) => {
+//   const response = await axios.get(`/participants/${id}`);
+//   return response.data;
+// };
 
 export const createParticipant = async (participantData, eventId) => {
-  const response = await axios.post(`/participants`, participantData, {
-    params: { id: eventId },
-  });
+  const response = await axios.post(
+    `/participants/registration/${eventId}`,
+    participantData
+  );
   return response.data;
 };

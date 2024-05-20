@@ -51,7 +51,7 @@ const Events = () => {
             <p>Organizer: {event.organizer}</p>
 
             <ButtonWrap>
-              <Link to="/registration">
+              <Link to={`/participants/registration/${event._id}`}>
                 <Button type="button">Register</Button>
               </Link>
 

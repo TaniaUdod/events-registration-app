@@ -14,19 +14,17 @@ const getAllParticipants = async (req, res, next) => {
   res.status(200).json({ participants });
 };
 
-const getOneParticipant = ctrlWrapper(async (req, res, next) => {
-  const { id } = req.params;
-
-  const event = await Event.findById(id);
-  if (!event) {
-    throw HttpError(404, "Event not found");
-  }
-
-  res.json(result);
-});
+// const getOneParticipant = ctrlWrapper(async (req, res, next) => {
+//   const { id } = req.params;
+//   const event = await Event.findById(id);
+//   if (!event) {
+//     throw HttpError(404, "Event not found");
+//   }
+//   res.json(result);
+// });
 
 const createParticipant = async (req, res) => {
-  const { id } = req.query;
+  const { id } = req.params;
   const { name, email, dateOfBirth, source } = req.body;
 
   const event = await Event.findById(id);
@@ -52,6 +50,6 @@ const createParticipant = async (req, res) => {
 
 module.exports = {
   getAllParticipants: ctrlWrapper(getAllParticipants),
-  getOneParticipant: ctrlWrapper(getOneParticipant),
+  // getOneParticipant: ctrlWrapper(getOneParticipant),
   createParticipant: ctrlWrapper(createParticipant),
 };
