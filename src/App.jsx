@@ -1,7 +1,6 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
-import "./App.css";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 const Events = lazy(() => import("./pages/Events/Events"));

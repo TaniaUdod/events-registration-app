@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { fetchEventData } from "../../services/fetchEventData";
 import toast from "react-hot-toast";
@@ -24,27 +24,32 @@ const Events = () => {
   const [hasMore, setHasMore] = useState(true);
   const [sortBy, setSortBy] = useState("");
 
-  const fetchMoreData = async () => {
+  const fetchMoreData = useCallback(async () => {
     setIsLoading(true);
-    const eventData = await fetchEventData(page);
-    if (eventData.length === 0) {
-      setHasMore(false);
-      toast.error("You've reached the end of the event list");
-    } else {
-      setEvents((prevEvents) => {
-        const newEvents = eventData.filter(
-          (newEvent) => !prevEvents.some((event) => event._id === newEvent._id)
-        );
-        return [...prevEvents, ...newEvents];
-      });
-      setPage((prevPage) => prevPage + 1);
+    try {
+      const eventData = await fetchEventData(page);
+      if (eventData.length === 0) {
+        setHasMore(false);
+        toast.error("You've reached the end of the event list");
+      } else {
+        setEvents((prevEvents) => {
+          const newEvents = eventData.filter(
+            (newEvent) =>
+              !prevEvents.some((event) => event._id === newEvent._id)
+          );
+          return [...prevEvents, ...newEvents];
+        });
+      }
+    } catch (error) {
+      toast.error("Failed to fetch events");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  };
+  }, [page]);
 
   useEffect(() => {
     fetchMoreData();
-  }, []);
+  }, [fetchMoreData]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,7 +61,7 @@ const Events = () => {
       ) {
         return;
       }
-      fetchMoreData();
+      setPage((prevPage) => prevPage + 1);
     };
 
     window.addEventListener("scroll", handleScroll);

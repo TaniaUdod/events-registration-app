@@ -8,7 +8,6 @@ const buildPath = path.join(__dirname, "build");
 const eventsRouter = require("./src/backend/routes/eventsRouter.js");
 const participantsRouter = require("./src/backend/routes/participantsRouter.js");
 const connectDB = require("./src/backend/config/connectDB.js");
-// const runCronJob = require("./src/backend/helpers/fetchAndSaveEventsCron.js");
 
 const app = express();
 
@@ -30,7 +29,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.REACT_APP_PORT;
 connectDB();
-// runCronJob();
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(buildPath, "index.html"));
