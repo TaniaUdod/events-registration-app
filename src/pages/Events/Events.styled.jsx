@@ -12,7 +12,23 @@ export const Title = styled.h2`
   font-weight: 500;
   line-height: 56px;
   letter-spacing: -0.96px;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
+`;
+
+export const SortWrap = styled.div`
+  margin-bottom: 18px;
+  text-align: end;
+
+  & label {
+    font-size: 20px;
+  }
+
+  & select {
+    border-radius: 4px;
+    border: 1px solid #65979b;
+    outline: none;
+    cursor: pointer;
+  }
 `;
 
 export const EventsList = styled.ul`
