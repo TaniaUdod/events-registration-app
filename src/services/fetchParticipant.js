@@ -1,15 +1,18 @@
 import axios from "axios";
 
 export const getAllParticipants = async (eventId, limit = 20) => {
-  const response = await axios.get(`/participants`, {
-    params: { id: eventId, limit },
-  });
+  const response = await axios.get(
+    `https://events-registration-app.onrender.com/participants`,
+    {
+      params: { id: eventId, limit },
+    }
+  );
   return response.data;
 };
 
 export const createParticipant = async (participantData, eventId) => {
   const response = await axios.post(
-    `/participants/registration/${eventId}`,
+    `https://events-registration-app.onrender.com/participants/registration/${eventId}`,
     participantData
   );
   return response.data;
