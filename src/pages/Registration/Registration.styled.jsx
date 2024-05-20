@@ -7,6 +7,24 @@ export const Container = styled.div`
   padding: 0px 15px;
 `;
 
+export const ButtonBack = styled.button`
+  width: 100%;
+  max-width: 120px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: #80c2c7;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+  margin-bottom: 32px;
+  transition: transform 150ms linear, background-color 150ms linear;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: #91dde2;
+  }
+`;
+
 export const Title = styled.h2`
   font-size: 32px;
   font-weight: 500;

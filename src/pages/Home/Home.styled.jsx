@@ -40,7 +40,7 @@ export const Text = styled.p`
   line-height: 22px;
   letter-spacing: -0.32px;
   max-width: 471px;
-  margin-bottom: 64px;
+  margin: 0 auto;
 `;
 
 export const Button = styled.button`
@@ -52,6 +52,7 @@ export const Button = styled.button`
   font-size: 18px;
   font-weight: 700;
   line-height: 28px;
+  margin-top: 40px;
   transition: transform 150ms linear, background-color 150ms linear;
 
   &:hover {

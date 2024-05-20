@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { Event } = require("../models/events");
 
-const fetchEvents = async () => {
+const fetchEvents = async (page = 1) => {
   try {
     const response = await axios.get(
       "https://app.ticketmaster.com/discovery/v2/events.json",
@@ -9,8 +9,8 @@ const fetchEvents = async () => {
         params: {
           keyword: "concert music",
           countryCode: "US",
-          // page: "0",
-          // size: "20",
+          page: page - 1,
+          size: "20",
           apikey: process.env.REACT_APP_API_KEY,
         },
       }
@@ -19,6 +19,7 @@ const fetchEvents = async () => {
     const events = response.data._embedded?.events;
     if (events) {
       const eventsToSave = events.map((event) => ({
+        ticketmasterId: event.id,
         title: event.name,
         description: event.info || "No description available",
         eventDate: new Date(event.dates.start.dateTime),
@@ -27,14 +28,9 @@ const fetchEvents = async () => {
       }));
 
       for (const event of eventsToSave) {
-        const existingEvent = await Event.findOne({
-          title: event.title,
-          eventDate: event.eventDate,
+        await Event.updateOne({ ticketmasterId: event.ticketmasterId }, event, {
+          upsert: true,
         });
-
-        if (!existingEvent) {
-          await Event.create(event);
-        }
       }
 
       console.log("Events saved successfully");

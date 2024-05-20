@@ -2,6 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const eventSchema = new Schema(
   {
+    ticketmasterId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     title: {
       type: String,
       required: true,

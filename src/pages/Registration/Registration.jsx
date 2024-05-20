@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,6 +7,7 @@ import { createParticipant } from "../../services/fetchParticipant";
 import toast from "react-hot-toast";
 import {
   Button,
+  ButtonBack,
   Container,
   Error,
   Input,
@@ -21,6 +22,9 @@ import {
 const Registration = () => {
   const { id } = useParams();
   const [selectedSource, setSelectedSource] = useState("socialMedia");
+
+  const location = useLocation();
+  const backLink = useRef(location.state?.from ?? "/events");
 
   const schema = yup.object().shape({
     name: yup
@@ -66,6 +70,10 @@ const Registration = () => {
   return (
     <Container>
       <Title>Event registration</Title>
+
+      <Link to={backLink.current}>
+        <ButtonBack type="button">Go back</ButtonBack>
+      </Link>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputWrap>

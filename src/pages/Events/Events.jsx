@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchEventData } from "../../services/fetchEventData";
+import toast from "react-hot-toast";
 import Loader from "../../components/Loader/Loader";
 import {
   Button,
@@ -18,17 +19,47 @@ import {
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchMoreData = async () => {
+    setIsLoading(true);
+    const eventData = await fetchEventData(page);
+    if (eventData.length === 0) {
+      setHasMore(false);
+      toast.error("You've reached the end of the event list");
+    } else {
+      setEvents((prevEvents) => {
+        const newEvents = eventData.filter(
+          (newEvent) => !prevEvents.some((event) => event._id === newEvent._id)
+        );
+        return [...prevEvents, ...newEvents];
+      });
+      setPage((prevPage) => prevPage + 1);
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const eventData = await fetchEventData();
-      setEvents(eventData);
-      setIsLoading(false);
+    fetchMoreData();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+          document.documentElement.offsetHeight ||
+        isLoading ||
+        !hasMore
+      ) {
+        return;
+      }
+      fetchMoreData();
     };
 
-    fetchData();
-  }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isLoading, hasMore]);
 
   return (
     <Container>

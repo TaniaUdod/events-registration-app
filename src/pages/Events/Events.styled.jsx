@@ -20,6 +20,7 @@ export const EventsList = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  margin-bottom: 40px;
 `;
 
 export const EventsItem = styled.li`
