@@ -4,6 +4,7 @@ import { getAllParticipants } from "../../services/fetchParticipant";
 import {
   Button,
   Container,
+  Input,
   ItemName,
   Message,
   ParticipantsItem,
@@ -15,6 +16,7 @@ import {
 const Participants = () => {
   const { id } = useParams();
   const [participants, setParticipants] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const location = useLocation();
   const backLink = useRef(location.state?.from ?? "/events");
@@ -32,13 +34,31 @@ const Participants = () => {
     fetchParticipants();
   }, [id]);
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredParticipants = participants.filter((participant) => {
+    return (
+      participant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      participant.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+
   return (
     <Container>
       <Link to={backLink.current}>
         <Button type="button">Go back</Button>
       </Link>
 
-      {participants.length > 0 ? (
+      <Input
+        type="text"
+        placeholder="Search by name or email"
+        value={searchQuery}
+        onChange={handleSearchChange}
+      />
+
+      {filteredParticipants.length > 0 ? (
         <>
           <ParticipantsTitle>
             <TitleAccent>
@@ -47,7 +67,7 @@ const Participants = () => {
             participants
           </ParticipantsTitle>
           <ParticipantsList>
-            {participants.map((participant) => (
+            {filteredParticipants.map((participant) => (
               <ParticipantsItem key={participant._id}>
                 <ItemName>{participant.name}</ItemName>
                 <p>{participant.email}</p>

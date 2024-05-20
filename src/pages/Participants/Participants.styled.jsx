@@ -7,6 +7,21 @@ export const Container = styled.div`
   padding: 0px 15px;
 `;
 
+export const Input = styled.input`
+  display: flex;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+  width: 100%;
+  max-width: 190px;
+  margin: 20px 0;
+  transition: border-color 150ms linear;
+
+  &:hover {
+    border-color: #84c7cc;
+  }
+`;
+
 export const ParticipantsTitle = styled.p`
   font-size: 20px;
   letter-spacing: -0.96px;

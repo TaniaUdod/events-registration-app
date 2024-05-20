@@ -64,6 +64,12 @@ export const Input = styled.input`
   border: 1px solid rgba(18, 20, 23, 0.1);
   width: 100%;
   max-width: 438px;
+
+  transition: border-color 150ms linear;
+
+  &:hover {
+    border-color: #84c7cc;
+  }
 `;
 
 export const Error = styled.p`
